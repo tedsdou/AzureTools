@@ -1,6 +1,3 @@
-#for Jerome's Mac
-$now = Get-Date -UFormat "%Y-%m-%d_%H-%M-%S"
-$filepath = "/Users/u13873/Desktop/$now.csv"
 $filepath = 'C:\Temp\vnetInfo.csv'
 
 <# 
