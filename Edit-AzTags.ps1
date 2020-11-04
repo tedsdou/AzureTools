@@ -6,8 +6,14 @@ function Edit-AzTags {
         This will remove errant whitespace from start or end of Azure tag in selected subscription.
         There is an option to target all subscriptions using the AllSubscriptions switch.
     .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
+        PS C:\> Edit-AzTags -Subscription 'MyAzureSub' -ResourceGroupName 'ContosoResourceGroup'
+        This will point to the subscription 'MyAzureSub' and target only the resoure group named 'ContosoResourceGroup'
+    .EXAMPLE
+        PS C:\> Edit-AzTags -AllSubscriptions
+        This will target all subscriptions in your Azure environment
+    .EXAMPLE
+        PS C:\> Edit-AzTags -Subscription 'MyAzureSub'
+        This will target all resources in the subscription named 'MyAzureSub'
     .NOTES
         Author:  Ted Sdoukos (Ted.Sdoukos@Microsoft.com)
         Date:    4NOV2020
