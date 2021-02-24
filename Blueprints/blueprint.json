@@ -1,1 +1,22 @@
-
+{
+  "properties": {
+    "description": "",
+    "targetScope": "subscription",
+    "parameters": {},
+    "resourceGroups": {
+      "LABResourceGroup": {
+        "description": "LAB Resource Group",
+        "tags": {
+          "Application": "TCU",
+          "BillTo": "Tango",
+          "BusinessCriticality": "Standard",
+          "Project": "ProjectTango",
+          "DataClassification": "Internal",
+          "ContactEmail": "WhiskeyTango@Foxtrot.com"
+        },
+        "location": "eastus2",
+        "name": "LAB-E2-TEST-TCU-RG"
+      }
+    }
+  }
+}
