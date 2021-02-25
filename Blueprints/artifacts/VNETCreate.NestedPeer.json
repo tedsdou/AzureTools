@@ -88,18 +88,13 @@
                   "description": "description"
                 },
                 "defaultValue": [
-                  "162.9.87.100",
-                  "162.9.86.47",
-                  "162.9.90.96",
-                  "162.9.90.97",
-                  "162.9.128.217",
-                  "162.9.137.122",
-                  "168.63.129.16"
+                 "8.8.8.8",
+                 "8.8.4.4"   
                 ]
               },
               "PeeringSubscriptionID": {
                 "type": "string",
-                "defaultValue": "d4cb0d61-1e18-4798-8627-775f87a0de33"
+                "defaultValue": "scrubbed"
               }
             },
             "variables": {
@@ -261,7 +256,7 @@
                 ]
               },
               "PeeringSubscriptionID": {
-                  "value": "d4cb0d61-1e18-4798-8627-775f87a0de33"
+                  "value": "scrubbed"
               }
         },
         "resourceGroup": "LABResourceGroup"
