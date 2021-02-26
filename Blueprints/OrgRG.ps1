@@ -13,7 +13,7 @@ function Add-ResourceGroupName {
         $Project,
         $OrgShortName = 'DTE',
         [ValidateSet('Good','NotAvailable')]
-        $ServiceNowStatus
+        $ServiceNowCI
     )
     
         If($Environment -eq 'PROD'){
@@ -35,7 +35,7 @@ function Add-ResourceGroupName {
             'BusinessCriticality' = $Criticality
             'DataClassification' = $DataClass
             'Project' = $Project
-            'ServiceNowCI' = $ServiceNowStatus
+            'ServiceNowCI' = $ServiceNowCI
           }
           $Name = "$OrgShortName-$RegionName-$Environment-$AppRGName-RG"
 
@@ -73,7 +73,7 @@ $params = @{
         'DataClass' = 'Internal'
         'Project' = 'ProjectTango'
         'OrgShortName' = 'LAB'
-        'ServiceNowStatus' = 'Good'
+        'ServiceNowCI' = 'Good'
 }
 $rg = Add-ResourceGroupName @params 
 $BluePrintPath = "C:\Blueprint\$($params.OrgShortName)-BluePrint"
