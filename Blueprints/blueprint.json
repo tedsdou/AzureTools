@@ -13,6 +13,7 @@
           "Project": "ProjectTango",
           "DataClassification": "Internal",
           "ContactEmail": "WhiskeyTango@Foxtrot.com"
+          "ServiceNowCI": "Good"
         },
         "location": "eastus2",
         "name": "LAB-E2-TEST-TCU-RG"
