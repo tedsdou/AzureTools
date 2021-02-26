@@ -12,7 +12,7 @@
           "BusinessCriticality": "Standard",
           "Project": "ProjectTango",
           "DataClassification": "Internal",
-          "ContactEmail": "WhiskeyTango@Foxtrot.com"
+          "ContactEmail": "WhiskeyTango@Foxtrot.com",
           "ServiceNowCI": "Good"
         },
         "location": "eastus2",
