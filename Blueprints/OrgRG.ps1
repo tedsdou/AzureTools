@@ -46,8 +46,8 @@ function Add-ResourceGroupName {
                 'targetScope' =  'subscription'
                 'parameters' = @{}
                 'resourceGroups' = @{
-                    "$OrgShortName`ResourceGroup" =  @{
-                        'description' =  "$OrgShortName Resource Group"
+                    "$OrgShortName-$AppName-ResourceGroup" =  @{
+                        'description' =  "$OrgShortName $AppName Resource Group"
                         "name" = $Name
                         "tags" =  $Tags
                         "location" = $location.ToLower()
