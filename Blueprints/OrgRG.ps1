@@ -11,7 +11,7 @@ function Add-ResourceGroupName {
         [ValidateSet( 'Confidential','Highly Sensitive','Internal','Public')]
         $DataClass,
         $Project,
-        $OrgShortName = 'DTE',
+        $OrgShortName,
         [ValidateSet('Good','NotAvailable')]
         $ServiceNowCI
     )
