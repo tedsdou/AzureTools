@@ -76,7 +76,7 @@ $params = @{
         'ServiceNowCI' = 'Good'
 }
 $rg = Add-ResourceGroupName @params 
-$BluePrintPath = "C:\Blueprint\$($params.OrgShortName)-BluePrint"
+$BluePrintPath = "C:\Blueprint\$($params.OrgShortName)-$($params.AppName)-BluePrint"
 $BluePrintPath,"$BluePrintPath\artifacts" | ForEach-Object {
     if (-not(Test-Path -Path $_ -ErrorAction ignore)) {
         $null = New-Item -ItemType Directory -Path $_
