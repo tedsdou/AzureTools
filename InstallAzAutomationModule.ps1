@@ -6,7 +6,7 @@ Function Get-AzModuleInfo {
     $ModuleUrlFormat = "$PsGalleryApiUrl/Search()?`$filter={1}&searchTerm=%27{0}%27&targetFramework=%27%27&includePrerelease=false&`$skip=0&`$top=40"
     $CurrentModuleURL = $ModuleUrlFormat -f $ModuleName, 'IsLatestVersion'
     $SearchID = Invoke-RestMethod -Method Get -Uri $CurrentModuleURL -UseBasicParsing | 
-        Where-Object -FilterScript { $_.Title.InnerText -eq $moduleName }
+    Where-Object -FilterScript { $_.Title.InnerText -eq $moduleName }
     $packageDetails = Invoke-RestMethod -Method Get -UseBasicParsing -Uri $SearchID.id
     $packageDetails
 }
@@ -30,7 +30,7 @@ Function Install-AzModuleDependancy {
     foreach ($M in $ModuleName) {
         Write-Verbose -Message "Getting information for $M"
         $module = (Get-AzModuleInfo -ModuleName $M).Entry.Properties
-        If($ModuleVersion){
+        If ($ModuleVersion) {
             $link = "$PsGalleryApiUrl/package/$($module.id)/$($module.Version)"
         }
         else {
@@ -97,7 +97,7 @@ Function Install-AzAutomationModule {
     }
     
     $DepList = New-Object -TypeName System.Collections.ArrayList
-    $List = $AzModule | ForEach-Object {Get-AzModuleDependancy -ModuleName $_}
+    $List = $AzModule | ForEach-Object { Get-AzModuleDependancy -ModuleName $_ }
     foreach ($item in $List) {
         Get-AzModuleDependancy -ModuleName $item | ForEach-Object {
             If (($_ -ne '') -and ($DepList -notcontains $_)) {
@@ -107,7 +107,7 @@ Function Install-AzAutomationModule {
     }
 
     If ($DepList) { Install-AzModuleDependancy -ModuleName $DepList -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName }
-    $PsGalleryApiUrl = 'https://www.powershellgallery.com/api/v2'
+    $PsGalleryApiUrl = 'https://www.powershellgallery.com/api/v2' #'https://www.powershellgallery.com/api/v2'
     If ($PSCmdlet.ParameterSetName -eq 'All') {
         $AzModule = Get-AzModuleDependancy -ModuleName 'Az'
     }
@@ -117,38 +117,30 @@ Function Install-AzAutomationModule {
                 -Name $_ -ErrorAction SilentlyContinue
             If (($InstallState.ProvisioningState -ne 'Succeeded') -or (-not($InstallState))) {
                 $module = (Get-AzModuleInfo -ModuleName $_).Entry.Properties
-                If($ModuleVersion){
-                    $link = "$PsGalleryApiUrl/package/$($module.id)/$($module.Version)"
+                
+                If ($ModuleVersion) {
+                    $link = "$PsGalleryApiUrl/package/$($_)/$($module.Version)"
                 }
                 else {
-                    $link = "$PsGalleryApiUrl/package/$($module.id)"
+                    $link = "$PsGalleryApiUrl/package/$($_)"
                 }
                 do {
-                    $Link = (Invoke-WebRequest -Uri $link -MaximumRedirection 0 -UseBasicParsing -ErrorAction Stop).Headers.Location 
-                } until ($link.Contains('.nupkg'))
-                <#  # Find the actual blob storage location of the module
-                $TryCount = 0
-                do {
-                    try {
-                        $Link = (Invoke-WebRequest -Uri $link -MaximumRedirection 0 -UseBasicParsing -ErrorAction Stop).Headers.Location 
-                    }
-                    catch {
-                        $TryCount++
-                    }
-                    
-                } Until ( ($link.Contains('.nupkg')) -or ($TryCount -ge 10))
-                If($TryCount -eq 10){Write-Warning -Message "Unable to locate download package for $_" ; Continue} #>
+                    $TryCount = 0
+                    $Link = (Invoke-WebRequest -Uri $link -MaximumRedirection 0 -UseBasicParsing -ErrorAction Ignore).Headers.Location 
+                    $TryCount++
+                } until ($link.Contains('.nupkg') -or $TryCount -gt 10)
+                
                 $ModName = $Module.Id
                 Write-Verbose -Message "Currently installing $ModName"
                 Write-Progress -Activity "Installing $ModName"
                 $null = New-AzAutomationModule -AutomationAccountName $automationAccountName -Name $ModName -ContentLinkUri $link -ResourceGroupName $resourceGroupName
                 If ($Wait) {
-                        Do {
-                            $Status = Get-AzAutomationModule -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -Name $_ 
-                            Start-Sleep -Seconds 1
-                        }
-                        While ($Status.ProvisioningState -eq 'Creating')
-                        Write-Verbose -Message "Provisioning of $_ is complete.  Current status is $($Status.ProvisioningState)"
+                    Do {
+                        $Status = Get-AzAutomationModule -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -Name $_ 
+                        Start-Sleep -Seconds 1
+                    }
+                    While ($Status.ProvisioningState -eq 'Creating')
+                    Write-Verbose -Message "Provisioning of $_ is complete.  Current status is $($Status.ProvisioningState)"
                 }
                 #Added a sleep in here to alleviate errors
                 # Most common error: Index was out of range. Must be non-negative and less than the size of the collection.
@@ -165,12 +157,11 @@ Function Install-AzAutomationModule {
 
 
 # #Make sure you are logged in and set to the proper context.
-#Connect-AzAccount -Subscription 'Microsoft Azure Internal Consumption'
 #Connect-AzAccount -Subscription 'Visual Studio Enterprise'
 #Set-AzContext -Subscription 'Visual Studio Enterprise'
 
-$ResourceGroupName = 'TGSAutoLab' #Change this to your rg
-$AutomationAccountName = 'TGSAuto' #Change this to your automation account name
+$ResourceGroupName = 'ContosoResourceGroup' #Change this to your rg
+$AutomationAccountName = 'ContosoAutomationAccount' #Change this to your automation account name
     
 $StopWatch = [System.Diagnostics.Stopwatch]::StartNew()
 Install-AzAutomationModule -ResourceGroupName $ResourceGroupName -AutomationAccountName $AutomationAccountName -All -Verbose
