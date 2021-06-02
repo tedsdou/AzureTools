@@ -1,0 +1,20 @@
+Status,Messsage,Account
+SUCCESS,Removed PASSWD_NOTREQD,testuser49
+ERROR,The password does not meet the length, complexity, or history requirement of the domain.,testuser49
+SUCCESS,Removed PASSWD_NOTREQD,Test-1002
+SUCCESS,Removed PASSWD_NOTREQD,Test-1003
+SUCCESS,Removed PASSWD_NOTREQD,Test-1004
+SUCCESS,Removed PASSWD_NOTREQD,Test-1005
+SUCCESS,Removed PASSWD_NOTREQD,Test-1006
+ERROR,The password does not meet the length, complexity, or history requirement of the domain.,testuser49
+ERROR,The password does not meet the length, complexity, or history requirement of the domain.,testuser49
+SUCCESS,Removed PASSWD_NOTREQD,Test-1002
+SUCCESS,Removed PASSWD_NOTREQD,Test-1003
+SUCCESS,Removed PASSWD_NOTREQD,Test-1004
+SUCCESS,Removed PASSWD_NOTREQD,Test-1005
+SUCCESS,Removed PASSWD_NOTREQD,Test-1006
+ERROR,The password does not meet the length, complexity, or history requirement of the domain.,testuser49
+SUCCESS,Removed PASSWD_NOTREQD,Test-1004
+SUCCESS,Removed PASSWD_NOTREQD,Test-1005
+SUCCESS,Removed PASSWD_NOTREQD,Test-1006
+ERROR,The password does not meet the length, complexity, or history requirement of the domain.,testuser49
