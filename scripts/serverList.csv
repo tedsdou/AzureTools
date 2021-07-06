@@ -1,5 +1,0 @@
-#TYPE Microsoft.ActiveDirectory.Management.ADComputer
-"DistinguishedName","DNSHostName","Enabled","Name","ObjectClass","ObjectGUID","SamAccountName","SID","UserPrincipalName"
-"CN=2012R2-DC,OU=Domain Controllers,DC=contoso,DC=com","2012R2-DC.contoso.com","True","2012R2-DC","computer","e2502f96-c701-4a99-a480-8ebad841df19","2012R2-DC$","S-1-5-21-2595489974-3098222971-3043142763-1001",
-"CN=WIN8-WS,OU=Client Machines,DC=contoso,DC=com","WIN8-WS.contoso.com","True","WIN8-WS","computer","892324bc-78c1-439a-94d0-ecb82644172c","WIN8-WS$","S-1-5-21-2595489974-3098222971-3043142763-1105",
-"CN=2012R2-MS,OU=Member Servers,DC=contoso,DC=com","2012R2-MS.contoso.com","True","2012R2-MS","computer","c10468e8-9460-46c0-ac0a-d15e48777aab","2012R2-MS$","S-1-5-21-2595489974-3098222971-3043142763-1106",
