@@ -1,0 +1,63 @@
+
+
+Script started by Power at 08/04/2020 09:30:33
+==================================================
+SUCCESS:  Added CN=OfficeUser-3,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Bioraft
+SUCCESS:  Added CN=OfficeUser-12,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Bioraft
+SUCCESS:  Added CN=OfficeUser-13,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Bioraft
+SUCCESS:  Added CN=OfficeUser-15,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Bioraft
+SUCCESS:  Added CN=OfficeUser-3,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-12,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-13,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-15,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-3,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-12,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-13,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-15,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-3,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Faculty
+SUCCESS:  Added CN=OfficeUser-12,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Faculty
+SUCCESS:  Added CN=OfficeUser-13,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Faculty
+SUCCESS:  Added CN=OfficeUser-15,OU=Office365-Faculty,DC=contoso,DC=local to DUO_Faculty
+SUCCESS:  Added CN=OfficeUser-3,OU=Office365-Faculty,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-12,OU=Office365-Faculty,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-13,OU=Office365-Faculty,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-15,OU=Office365-Faculty,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-1,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-5,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-6,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-7,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-18,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-20,OU=Office365-Staff,DC=contoso,DC=local to DUO_Dropbox
+SUCCESS:  Added CN=OfficeUser-1,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-5,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-6,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-7,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-18,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-20,OU=Office365-Staff,DC=contoso,DC=local to DUO_Zoom
+ERROR: Group DUO_Staff was not found in Active Directory
+SUCCESS:  Added CN=OfficeUser-1,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-5,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-6,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-7,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-18,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-20,OU=Office365-Staff,DC=contoso,DC=local to DUO_DocuSign
+SUCCESS:  Added CN=OfficeUser-2,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-4,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-8,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-9,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-10,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-11,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-14,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-16,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-17,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-19,OU=Office365-Student,DC=contoso,DC=local to DUO_Students
+SUCCESS:  Added CN=OfficeUser-2,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-4,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-8,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-9,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-10,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-11,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-14,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-16,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-17,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom
+SUCCESS:  Added CN=OfficeUser-19,OU=Office365-Student,DC=contoso,DC=local to DUO_Zoom

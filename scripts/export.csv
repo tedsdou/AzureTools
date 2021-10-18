@@ -1,0 +1,5 @@
+#TYPE Selected.System.Management.Automation.PSCustomObject
+"Regkey","StartValue","Server"
+"HKLM:\SYSTEM\CurrentControlSet\Services\3Ware","71","2012R2-MS"
+"HKLM:\SYSTEM\CurrentControlSet\Services\3Ware","67","WIN8-WS"
+"HKLM:\SYSTEM\CurrentControlSet\Services\3Ware","71","2012R2-DC"
