@@ -35,11 +35,17 @@ function Get-TeamsUserInfo {
     [CmdletBinding()]
     param ()
     begin {
+        'MicrosoftTeams','MSOnline' | ForEach-Object {
+            If (-not(Get-Module -ListAvailable -Name $_)) {
+                Write-Warning -Message "$_ Module is not installed. Please install it and try again."
+                Exit
+            }
+        }
         if (-not (Get-MsolCompanyInformation -ErrorAction SilentlyContinue)) {
             Write-Warning -Message 'You are not connected to Office 365, please login'
             Connect-MsolService
         }
-        if (-not (Get-CsPolicyPacke -ErrorAction SilentlyContinue)) {
+        if (-not (Get-CsPolicyPackage -ErrorAction SilentlyContinue)) {
             Write-Warning -Message 'You are not connected to Microsoft Teams, please login'
             Connect-MicrosoftTeams
         }
