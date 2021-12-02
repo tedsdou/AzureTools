@@ -44,7 +44,7 @@ function Edit-AzTag {
         [Parameter(ParameterSetName = 'All')]
         [switch]$AllSubscriptions,
 
-        [Parameter(ParameterSetName = 'Targeted',Mandatory)]
+        [Parameter(ParameterSetName = 'Targeted', Mandatory)]
         [string]$Subscription,
 
         [Parameter(ParameterSetName = 'Targeted')]
@@ -52,31 +52,31 @@ function Edit-AzTag {
     )
     
     begin {
-        If(-not(Get-AzContext)){
+        If (-not(Get-AzContext)) {
             Write-Warning -Message "No Azure Context Found!`n`rLogging you in"
             Login-AzAccount
         }
     }
     process {
-        If($PSCmdlet.ParameterSetName -eq 'All'){
+        If ($PSCmdlet.ParameterSetName -eq 'All') {
             $AzSubscription = Get-AzSubscription
         }
-        Else{
+        Else {
             $AzSubscription = Get-AzSubscription -SubscriptionName $Subscription
         }
-        foreach($s in $AzSubscription){
+        foreach ($s in $AzSubscription) {
             $null = Set-AzContext -SubscriptionName $s.Name
-            $bTags = Get-AzTag | Where-Object {$_.Name -match '^\s+|\s+$'}
-            If(-not($bTags)){
+            $bTags = Get-AzTag | Where-Object { $_.Name -match '^\s+|\s+$' }
+            If (-not($bTags)) {
                 Write-Output -InputObject "There is nothing to clean in subscription: $($s.name)"
                 exit
             }
-            foreach($b in $bTags){
-                If($ResourceGroup){
+            foreach ($b in $bTags) {
+                If ($ResourceGroup) {
                     try {
-                        [array]$Resource = Get-AzResourceGroup -Name $ResourceGroup -ErrorAction Stop | Where-Object {$_.Tags.Keys -contains $b.Name} | 
-                            Select-Object -Property Tags,ResourceId
-                        $Resource += Get-AzResource -ResourceGroupName $ResourceGroup -TagName $b.Name | Select-Object -Property Tags,ResourceId
+                        [array]$Resource = Get-AzResourceGroup -Name $ResourceGroup -ErrorAction Stop | Where-Object { $_.Tags.Keys -contains $b.Name } | 
+                        Select-Object -Property Tags, ResourceId
+                        $Resource += Get-AzResource -ResourceGroupName $ResourceGroup -TagName $b.Name | Select-Object -Property Tags, ResourceId
                     }
                     catch {
                         Write-Warning -Message "Unable to find $ResourceGroup in $($s.name)"
@@ -84,15 +84,15 @@ function Edit-AzTag {
                     }
                 }
                 else {
-                    [array]$Resource = Get-AzResource -TagName $b.Name | Select-Object -Property Tags,ResourceId
-                    $Resource += Get-AzResourceGroup | Where-Object {$_.Tags.Keys -contains $b.Name} | Select-Object -Property Tags,ResourceId   
+                    [array]$Resource = Get-AzResource -TagName $b.Name | Select-Object -Property Tags, ResourceId
+                    $Resource += Get-AzResourceGroup | Where-Object { $_.Tags.Keys -contains $b.Name } | Select-Object -Property Tags, ResourceId   
                 }
                 foreach ($r in $Resource) {
                     #Find the one with the space
-                    $space = $r.Tags.GetEnumerator() | Where-Object { $_.Key -eq $b.Name}
+                    $space = $r.Tags.GetEnumerator() | Where-Object { $_.Key -eq $b.Name }
                     # If there is another one that matches the name, then delete this one
-                    If($r.Tags.ContainsKey($space.Key.Trim())){
-                        $DelTag = @{$space.Key = $space.Value}
+                    If ($r.Tags.ContainsKey($space.Key.Trim())) {
+                        $DelTag = @{$space.Key = $space.Value }
                         try {
                             Update-AzTag -ResourceId $r.ResourceId -Tag $DelTag -Operation Delete -ErrorAction Stop
                         }
@@ -117,7 +117,7 @@ function Edit-AzTag {
         }
     }
 }
-Function Get-AzTagReport{
+Function Get-AzTagReport {
     <#
     .SYNOPSIS
         Gathers information about Azure tags in the environment
@@ -149,15 +149,15 @@ Function Get-AzTagReport{
         $OutputFile = 'C:\Windows\Temp\GetAzTagReport.csv',
 
         [switch]$NoOutputFile
-        )
-    Begin{
-        If(-not(Get-AzContext)){
+    )
+    Begin {
+        If (-not(Get-AzContext)) {
             Write-Warning -Message "No Azure Context Found!`n`rLogging you in"
             Login-AzAccount
         }
     }
-    Process{
-        If($PSCmdlet.ParameterSetName -eq 'All'){
+    Process {
+        If ($PSCmdlet.ParameterSetName -eq 'All') {
             [System.Collections.ArrayList]$AzSubscription = (Get-AzSubscription).Name
         }
         else {
@@ -171,15 +171,15 @@ Function Get-AzTagReport{
             }
         }
         #region Grab ALL tags from selected Subscriptions
-        $AzTags = 'ResourceGroupName','Subscription'
-        foreach($s in $AzSubscription){
+        $AzTags = 'ResourceGroupName', 'Subscription'
+        foreach ($s in $AzSubscription) {
             $null = Set-AzContext -Subscription $s
             $AzTags += (Get-AzTag).Name
         }
         #Check for duplicate tags
         $unique = ($AzTags.ToUpper().Trim() | Select-Object -Unique).count
         $actual = $AzTags.count
-        if($unique -ne $actual){
+        if ($unique -ne $actual) {
             Write-Warning -Message "You have duplicated tag names in subscription name: $s`n`rActual: $actual`n`rUnique: $unique"
             Write-Warning -Message "Run 'Edit-AzTag -Subscription $s' to correct or edit manually at https://portal.azure.com`n`rSKIPPING subscription name $s"
             $null = $AzSubscription.Remove($s)
@@ -189,29 +189,29 @@ Function Get-AzTagReport{
         #EndRegion
 
         #Region Grab all information for Resource Groups
-        foreach($s in $AzSubscription){
+        foreach ($s in $AzSubscription) {
             $null = Set-AzContext -Subscription $s
             $ResourceGroup = Get-AzResourceGroup 
-            foreach($Resource in $ResourceGroup){
+            foreach ($Resource in $ResourceGroup) {
                 $r = Get-AzResourceGroup -Name $Resource.ResourceGroupName
                 [System.Collections.Hashtable]$Tags = $r.Tags
                 $out = [ordered]@{
                     'ResourceGroupName' = $r.ResourceGroupName
                     'Subscription'      = $s
                 }
-                if($tags){
+                if ($tags) {
                     $Tags.GetEnumerator() | ForEach-Object {
                         $out.($_.Name) = $_.Value
                     }
                 }
-                $out | ForEach-Object {[PSCustomObject]$_} | Export-Csv -Path $OutputFile -Append -Force 
+                $out | ForEach-Object { [PSCustomObject]$_ } | Export-Csv -Path $OutputFile -Append -Force 
                 $null = $out
             }    
         }
         #EndRegion
     }
-    End{
-        If($NoOutputFile){
+    End {
+        If ($NoOutputFile) {
             Import-Csv -Path $OutputFile
             Remove-Item -Path $OutputFile -Force
         }
