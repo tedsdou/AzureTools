@@ -38,6 +38,7 @@ foreach ($Sub in $Subs) {
                 }
             }
             catch {
+                #This is a catch block
                 Add-Content -Path $using:ErrorLog -Value "Failed to get VM extension for VM: $VM - RG: $ResourceGroupName - Subscription: $using:Sub `n`rERROR: $($_.Exception.message)"
             }
         }
