@@ -148,7 +148,7 @@ Function Get-AzTagReport {
         [Switch]
         $AllSubscriptions,
 
-        $OutputFile = 'C:\Windows\Temp\GetAzTagReport.csv',
+        $OutputFile = "$env:Temp\GetAzTagReport.csv",
 
         [switch]$NoOutputFile
     )
