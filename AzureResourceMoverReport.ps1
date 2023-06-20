@@ -1,8 +1,8 @@
 #Requires -Version 7 -Modules AZ
 
 $CSVSupport = "$ENV:Temp\moveSupport.csv"
-$OutFile = "$ENV:Temp\AzureResourceMove.csv"
-Remove-Item -Path $CSVSupport,$OutFile -ErrorAction Ignore
+$OutFile = "$ENV:Temp\AzureResourceMove$((Get-Date -Format s) -replace ':','_').csv"
+Remove-Item -Path $CSVSupport -ErrorAction Ignore
 
 $null = Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/tfitzmac/resource-capabilities/main/move-support-resources-with-regions.csv' -OutFile $CSVSupport
 $info = Import-Csv -Path $CSVSupport
