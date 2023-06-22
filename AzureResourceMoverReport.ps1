@@ -18,22 +18,17 @@ Remove-Item -Path $CSVSupport -ErrorAction Ignore
     }
 }
 
-
-
 If (-not(Get-AzContext)) {
     Write-Warning -Message "No Azure Context Found!`nLogging you in"
     Login-AzAccount
 }
 
-$Tenant = Get-AzTenant | Out-GridView -PassThru -Title "Choose the tenant you wish to evaluate"
+$Tenant = Get-AzTenant | Out-GridView -PassThru -Title "Choose the tenant you wish to evaluate | Choose only one and click 'OK'"
 
 $null = Invoke-WebRequest -Uri "https://raw.githubusercontent.com/tfitzmac/resource-capabilities/main/move-support-resources-with-regions.csv" -OutFile $CSVSupport
 $info = Import-Csv -Path $CSVSupport
-If (-not(Get-AzContext)) {
-    Write-Warning -Message "You are not logged into Azure.  Use "Login-AzAccount" to login."
-    exit
-}
-$Subscription = Get-AzSubscription -TenantId $Tenant.Id | Out-GridView -PassThru -Title "Choose the subscription(s) you wish to evaluate"
+
+$Subscription = Get-AzSubscription -TenantId $Tenant.Id | Out-GridView -PassThru -Title "Choose the subscription(s) you wish to evaluate | Use Ctrl+LeftClick to choose multiple, then click 'OK'"
 [System.Collections.ArrayList]$ResArr = @()
 foreach ($Sub in $Subscription) {
     try {
@@ -280,12 +275,17 @@ foreach ($Sub in $Subscription) {
             "Location"          = $R.Location
             "SubID"             = (Get-AzSubscription | Where-Object { $_.Id -eq $R.SubscriptionID }).Name
             "ResourceGroupName" = $R.ResourceGroupName
-            "MoveResourceGroup" = if ($lineItem."Move Resource Group" -eq 0) { "No$RGComment" }elseif ($lineItem."Move Resource Group" -eq 1) { "Yes$RGComment" }else { "N/A" }
-            "MoveSubscription"  = if ($lineItem."Move Subscription" -eq 0) { "No$SubComment" }elseif ($lineItem."Move Subscription" -eq 1) { "Yes$SubComment" }else { "N/A" }
-            "MoveRegion"        = if ($lineItem."Move Region" -eq 0) { "No$RegionComment" }elseif ($lineItem."Move Region" -eq 1) { "Yes$RegionComment" }else { "N/A" }
-            "Comment"           = If ($Comment) { $Comment }else { "N/A" }
+            'MoveResourceGroup' = if ($lineItem.'Move Resource Group' -eq 0) { "NO" }elseif ($lineItem.'Move Resource Group' -eq 1) { "YES" }else { 'N/A' }
+            'ResourceGroupNotes' = if($RGComment){$RGComment}else{'N/A'}
+            'MoveSubscription'  = if ($lineItem.'Move Subscription' -eq 0) { "NO" }elseif ($lineItem.'Move Subscription' -eq 1) { "YES" }else { 'N/A' }
+            'SubscriptionsNotes' = if($SubComment){$SubComment}else{'N/A'}
+            'MoveRegion'        = if ($lineItem.'Move Region' -eq 0) { "NO" }elseif ($lineItem.'Move Region' -eq 1) { "YES" }else { 'N/A' }
+            'RegionNotes' = if($RegionComment){$RegionComment}else{'N/A'}
+            'Comment' = if($Comment){$Comment}else{'N/A'}
         })
         $RGComment = $SubComment = $RegionComment = $Comment = $null
     }
 }
-$ResArr | Export-Excel -Path $OutFile -WorksheetName 'ResourceMoveAnalysis' -TableStyle Medium16 -Title 'ResourceMoveAnalysis' -TitleBold
+$TableStyle = 'Light20'
+$Style = New-ExcelStyle -HorizontalAlignment Center -AutoSize -NumberFormat '0'
+$ResArr | Export-Excel -Path $OutFile -WorksheetName 'ResourceMoveAnalysis' -TableStyle $TableStyle -AutoSize -MaxAutoSizeRows 1000 -Style $Style
