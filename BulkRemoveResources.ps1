@@ -10,6 +10,12 @@ $VMList | ForEach-Object -Parallel {
     $vmConfig.StorageProfile.DataDisks | ForEach-Object { $_.DeleteOption = 'Delete' }
     $vmConfig.NetworkProfile.NetworkInterfaces | ForEach-Object { $_.DeleteOption = 'Delete' }
     $vmConfig | Update-AzVM
+    [PSCustomObject]@{
+        'Name' = $_
+        'OSDiskDeleteOption' = $vmConfig.StorageProfile.OsDisk.DeleteOption
+        'DataDiskDeleteOption' = $vmConfig.StorageProfile.DataDisks | ForEach-Object { $_.DeleteOption}
+        'NICDeleteOption' = $vmConfig.NetworkProfile.NetworkInterfaces | ForEach-Object { $_.DeleteOption}
+    }
     Remove-AzVM -Name $_ -ResourceGroupName $vmConfig.ResourceGroupName -WhatIf
 }
 
