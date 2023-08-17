@@ -1,29 +1,36 @@
-$VMList = 'Comma-Separated List of VMs'
-$RGList = 'Comma-Separated List of RGs'
-$TenantID = '<TenantID>'
+$VMList = 'VMList'
+$TenantID = 'TenantID'
 
-Login-AzAccount -Tenant $TenantID
+$null = Login-AzAccount -Tenant $TenantID -WarningAction Ignore
 
 $VMList | ForEach-Object -Parallel {
     $vmConfig = Get-AzVM -Name $_
     $vmConfig.StorageProfile.OsDisk.DeleteOption = 'Delete'
     $vmConfig.StorageProfile.DataDisks | ForEach-Object { $_.DeleteOption = 'Delete' }
     $vmConfig.NetworkProfile.NetworkInterfaces | ForEach-Object { $_.DeleteOption = 'Delete' }
-    $vmConfig | Update-AzVM
+    $null = $vmConfig | Update-AzVM
     [PSCustomObject]@{
         'Name'                 = $_
         'OSDiskDeleteOption'   = $vmConfig.StorageProfile.OsDisk.DeleteOption
         'DataDiskDeleteOption' = $vmConfig.StorageProfile.DataDisks | ForEach-Object { $_.DeleteOption }
         'NICDeleteOption'      = $vmConfig.NetworkProfile.NetworkInterfaces | ForEach-Object { $_.DeleteOption }
-    }
-    Remove-AzVM -Name $_ -ResourceGroupName $vmConfig.ResourceGroupName -WhatIf
+    } 
+    Remove-AzVM -Name $_ -ResourceGroupName $vmConfig.ResourceGroupName -Force
 }
 
-foreach ($RG in $RGList) {
-    Get-AzResource -ResourceGroupName $RG | ForEach-Object -Parallel {
-        Remove-AzResource -ResourceId $_.ResourceId -Force
+##Search for any orphaned resources
+foreach ($VM in $VMList) {
+    $Orphaned = Search-AzGraph -Query "Resources | where name contains '$VM'"
+    if ($Orphaned) {
+        foreach ($O in $Orphaned) {
+            [PSCustomObject]@{
+                'DeletedVM'     = $VM
+                'Name'          = $O.Name
+                'ResourceGroup' = $O.resourceGroup
+                'Location'      = $O.location
+                'Type'          = $O.type
+                'ResourceId'    = $O.ResourceId
+            }
+        }
     }
-    Remove-AzResourceGroup -Name $RG
 }
-
-
